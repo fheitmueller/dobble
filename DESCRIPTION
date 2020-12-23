@@ -2,10 +2,15 @@ Package: dobble
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Frederik Heitmüller
+Maintainer: Frederik Heitmüller <fheitmueller@gmx.de>
+Description: Creates a set of Dobble (or Spot It!) cards out of 57 images, with the help of the magick and circlize packages.
+Imports:
+    dplyr,
+    readr,
+    magick,
+    png,
+    pdftools
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
