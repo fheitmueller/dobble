@@ -79,7 +79,7 @@ len <- length(vec)
 picturelist <- vector(mode = "list", length = len)
 for (j in 1:len){
   num <- vec[j]
-  picturelist[[j]] <- image_read(file_list[num])
+  picturelist[[j]] <- image_read(paste0(infolder,"/",file_list[num]))
   picturelist[[j]] <- image_convert(picturelist[[j]], "png", matte=TRUE)
   rotation <- sample(c(0,90,180,270),1)
   picturelist[[j]] <- image_trim(picturelist[[j]])
@@ -138,7 +138,7 @@ finalcard_list <- list.files(cardfolder)
 for (j in 0:8){
   i <- j*6
   for (k in 1:6){
-        pic <- image_read(finalcard_list[i+k])
+        pic <- image_read(paste0(cardfolder, "/", finalcard_list[i+k]))
    pic <- image_trim(pic)
    assign(paste('pic',k,sep=''),pic)
   }
@@ -151,7 +151,7 @@ for (j in 0:8){
 }
 ##the last three cards
 for (k in 1:3){
-  pic <- image_read(finalcard_list[54+k])
+  pic <- image_read(paste0(cardfolder, "/", finalcard_list[54+k]))
   pic <- image_trim(pic)
   assign(paste('pic',k,sep=''),pic)
 }
