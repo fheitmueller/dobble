@@ -11,6 +11,9 @@ cards_to_A4(cardfolder, outfolder)
 
 \item{outfolder}{is the folder in which the final DIN A4 pdf sheets are saved}
 }
+\value{
+a set of DINA4 sheets with 6 cards on each
+}
 \description{
 Assembling cards on DINA4 sheets
 }

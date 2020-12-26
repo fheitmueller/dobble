@@ -11,6 +11,9 @@ create_cards(infolder, outfolder)
 
 \item{outfolder}{is the path of a folder in which the 57 created cards are saved}
 }
+\value{
+a set of dobble cards saved in the outfolder
+}
 \description{
 Create cards
 }
