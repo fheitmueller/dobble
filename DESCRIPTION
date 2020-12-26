@@ -6,8 +6,7 @@ Author: Frederik Heitmüller
 Maintainer: Frederik Heitmüller <fheitmueller@gmx.de>
 Description: Creates a set of Dobble (or Spot It!) cards out of 57 images, with the help of the magick and circlize packages.
 Imports:
-    dplyr,
-    readr,
+    circlize,
     magick,
     png,
     pdftools,
