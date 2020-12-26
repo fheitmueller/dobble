@@ -1,6 +1,6 @@
 # README
 
-Package is not fully tested yet and performance can still be improved!
+Package is not fully tested yet and performance can still be improved! Only use for testing purposes.
 
 This package contains functions to create a set of 57 "Dobble" or "Spot it!" cards, containing 8 symbols each.
 
