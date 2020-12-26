@@ -1,15 +1,11 @@
-#dobble script with list
-
-libraries <- (c("tidyverse", "magick", "png", "circlize", "pdftools"))
-lapply(libraries, library, character.only = TRUE)
-
-
-####make the dobble####
-##N*N first cards
 
 #' dobble_template
 #'
 #' Creates a list of dobble cards using numbers instead of images
+#' @return vector
+#' @export
+#' @examples
+#' dobble_template()
 
 dobble_template <- function(){
 
@@ -50,15 +46,17 @@ for (i in 0:(n-2)){
 }
 return(cardlist)
 }
-cardlist <- dobble_template()
 
-## read in the pictures
-## for reading in the whole folder content
-
+#' Create cards
 #' @param infolder is the path of a folder which contains 57 images that are used for the creation of the cards
 #' @param outfolder is the path of a folder in which the 57 created cards are saved
-#'
-#'
+#' @return a set of dobble cards saved in the outfolder
+#' @import magick
+#' @import circlize
+#' @import png
+#' @import grDevices
+#' @import stats
+#' @export
 
 create_cards <- function(infolder, outfolder){
 
@@ -129,9 +127,12 @@ dev.off()
 #'
 #'@param cardfolder is a folder containing the 57 individual cards
 #'@param outfolder is the folder in which the final DIN A4 pdf sheets are saved
+#'@return a set of DINA4 sheets with 6 cards on each
+#'@import magick
+#'@export
+
 cards_to_A4 <- function(cardfolder, outfolder){
 
-#### plot all on the same DINA4 sheet ####
 finalcard_list <- list.files(cardfolder)
 
 for (j in 0:8){
@@ -139,15 +140,14 @@ for (j in 0:8){
   for (k in 1:6){
         pic <- image_read(finalcard_list[i+k])
    pic <- image_trim(pic)
-   ##pic <- image_scale(pic, geometry_size_percent(width=130, height=130))
    assign(paste('pic',k,sep=''),pic)
   }
   out1 <- image_append(c(pic1,pic2))
   out2 <- image_append(c(pic3,pic4))
   out3 <- image_append(c(pic5,pic6))
   sheet <- image_append(c(out1,out2,out3), stack=TRUE)
-   name <- paste0(outfolder,"sheet",j,".pdf")
-        image_write(sheet, path=name, format="pdf")
+  name <- paste0(outfolder,"sheet",j,".pdf")
+  image_write(sheet, path=name, format="pdf")
 }
 ##the last three cards
 for (k in 1:3){
@@ -165,4 +165,4 @@ image_write(sheet, path=paste0(outfolder, "sheet9.pdf"), format="pdf")
 
 ###join pdfs
 
-pdf_combine(c("sheet0.pdf", "sheet1.pdf", "sheet2.pdf", "sheet3.pdf", "sheet4.pdf", "sheet5.pdf", "sheet6.pdf", "sheet7.pdf","sheet8.pdf","sheet9.pdf"), output = "joined.pdf")
+#pdf_combine(c("sheet0.pdf", "sheet1.pdf", "sheet2.pdf", "sheet3.pdf", "sheet4.pdf", "sheet5.pdf", "sheet6.pdf", "sheet7.pdf","sheet8.pdf","sheet9.pdf"), output = "joined.pdf")
