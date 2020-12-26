@@ -50,6 +50,7 @@ return(cardlist)
 #' Create cards
 #' @param infolder is the path of a folder which contains 57 images that are used for the creation of the cards
 #' @param outfolder is the path of a folder in which the 57 created cards are saved
+#' @param testmode indicates whether the code should be run in testmode and indicate any images that cannot be printed.
 #' @return a set of dobble cards saved in the outfolder
 #' @import magick
 #' @import circlize
@@ -58,7 +59,7 @@ return(cardlist)
 #' @import stats
 #' @export
 
-create_cards <- function(infolder, outfolder){
+create_cards <- function(infolder, outfolder, testmode){
 
 file_list <- list.files(path=infolder)
 
@@ -72,6 +73,7 @@ if (length(file_list) > 57){
 
 cardlist <- dobble_template()
 
+erroneous_pictures <- vector()
 ##insert until 57
 for (i in 1:57){
 vec <- cardlist[[i]]
@@ -93,13 +95,14 @@ picturelist <- sample(picturelist)
 ##create a list of different possible positions within the cell
 positions<- as.data.frame(cbind(c(0,1.5,2.5,4,5,6.5,8,10), c(0,4, 7, 5, 7, 4, 7, 7)))
 
+generate_output <- function(pictureselector){
 pathname <- paste0(outfolder,i,".jpg")
 jpeg(file=pathname, width=11, height=11, units="cm", res=800)
 
 circos.par(start.degree = 90)
 circos.initialize(letters[1:1], xlim = c(0, 10))
 circos.track(ylim = c(0, 10), panel.fun = function(x, y) {
-  for (m in 1:8){
+  for (m in seq_along(pictureselector)){
     im = picturelist[[m]]
     format = image_info(im)
     ratio = format$width / format$height
@@ -120,6 +123,18 @@ draw.sector(0, 360, border = "black")
 circos.clear()
 
 dev.off()
+}
+if (testmode==TRUE){
+for (o in 1:8){
+t <-  try(generate_output(pictureselector= c(o:o)))
+if("try-error" %in% class(t)){
+append(erroneous_pictures, picturelist[o])
+}
+}
+return(erroneous_pictures)
+  } else{
+generate_output(pictureselector = c(1:8))
+}
 }
 }
 

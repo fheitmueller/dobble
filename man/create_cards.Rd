@@ -4,12 +4,14 @@
 \alias{create_cards}
 \title{Create cards}
 \usage{
-create_cards(infolder, outfolder)
+create_cards(infolder, outfolder, testmode)
 }
 \arguments{
 \item{infolder}{is the path of a folder which contains 57 images that are used for the creation of the cards}
 
 \item{outfolder}{is the path of a folder in which the 57 created cards are saved}
+
+\item{testmode}{indicates whether the code should be run in testmode and indicate any images that cannot be printed.}
 }
 \value{
 a set of dobble cards saved in the outfolder
