@@ -59,7 +59,7 @@ return(cardlist)
 #' @import stats
 #' @export
 
-create_cards <- function(infolder, outfolder, testmode){
+create_cards <- function(infolder, outfolder){
 
 file_list <- list.files(path=infolder)
 
@@ -79,9 +79,11 @@ for (i in 1:57){
 vec <- cardlist[[i]]
 len <- length(vec)
 picturelist <- vector(mode = "list", length = len)
+picturenames <- vector()
 for (j in 1:len){
   num <- vec[j]
   picturelist[[j]] <- image_read(paste0(infolder,"/",file_list[num]))
+  append(picturenames, file_list[num])
   picturelist[[j]] <- image_convert(picturelist[[j]], "png", matte=TRUE)
   rotation <- sample(c(0,90,180,270),1)
   picturelist[[j]] <- image_trim(picturelist[[j]])
@@ -95,14 +97,15 @@ picturelist <- sample(picturelist)
 ##create a list of different possible positions within the cell
 positions<- as.data.frame(cbind(c(0,1.5,2.5,4,5,6.5,8,10), c(0,4, 7, 5, 7, 4, 7, 7)))
 
-generate_output <- function(pictureselector){
+
+generate_output <- function(){
 pathname <- paste0(outfolder,i,".jpg")
 jpeg(file=pathname, width=11, height=11, units="cm", res=800)
 
 circos.par(start.degree = 90)
 circos.initialize(letters[1:1], xlim = c(0, 10))
 circos.track(ylim = c(0, 10), panel.fun = function(x, y) {
-  for (m in seq_along(pictureselector)){
+  for (m in 1:8){
     im = picturelist[[m]]
     format = image_info(im)
     ratio = format$width / format$height
@@ -124,60 +127,11 @@ circos.clear()
 
 dev.off()
 }
-if (testmode==TRUE){
-for (o in 1:8){
-t <-  try(generate_output(pictureselector= c(o:o)))
+t <-  try(generate_output)
 if("try-error" %in% class(t)){
-append(erroneous_pictures, picturelist[o])
+  append(erroneous_pictures, picturesnames[m])
 }
 }
 return(erroneous_pictures)
-  } else{
-generate_output(pictureselector = c(1:8))
-}
-}
 }
 
-#' Assembling cards on DINA4 sheets
-#'
-#'@param cardfolder is a folder containing the 57 individual cards
-#'@param outfolder is the folder in which the final DIN A4 pdf sheets are saved
-#'@return a set of DINA4 sheets with 6 cards on each
-#'@import magick
-#'@export
-
-cards_to_A4 <- function(cardfolder, outfolder){
-
-finalcard_list <- list.files(cardfolder)
-
-for (j in 0:8){
-  i <- j*6
-  for (k in 1:6){
-        pic <- image_read(paste0(cardfolder, "/", finalcard_list[i+k]))
-   pic <- image_trim(pic)
-   assign(paste('pic',k,sep=''),pic)
-  }
-  out1 <- image_append(c(pic1,pic2))
-  out2 <- image_append(c(pic3,pic4))
-  out3 <- image_append(c(pic5,pic6))
-  sheet <- image_append(c(out1,out2,out3), stack=TRUE)
-  name <- paste0(outfolder,"sheet",j,".pdf")
-  image_write(sheet, path=name, format="pdf")
-}
-##the last three cards
-for (k in 1:3){
-  pic <- image_read(paste0(cardfolder, "/", finalcard_list[54+k]))
-  pic <- image_trim(pic)
-  assign(paste('pic',k,sep=''),pic)
-}
-out1 <- image_append(c(pic1,pic2))
-out2 <- image_append(c(pic3,pic1))
-out3 <- image_append(c(pic2,pic3))
-sheet <- image_append(c(out1,out2,out3), stack=TRUE)
-image_write(sheet, path=paste0(outfolder, "sheet9.pdf"), format="pdf")
-
-}
-
-###join pdfs
-
-#pdf_combine(c("sheet0.pdf", "sheet1.pdf", "sheet2.pdf", "sheet3.pdf", "sheet4.pdf", "sheet5.pdf", "sheet6.pdf", "sheet7.pdf","sheet8.pdf","sheet9.pdf"), output = "joined.pdf")
