@@ -2,8 +2,7 @@
 #'
 #' This function generates one dobble card with the help of the circlize package.
 #' @param x a vector of card numbers
-#' @param infolder the folder to read the files from
-#' @param file_list
+#' @param image_list a list of 57 images
 #' @param positions a dataframe of positions for the images on the graph
 #' @return one dobble card as ggplot object
 #' @import magick
@@ -13,13 +12,18 @@
 #' @import stats
 #' @export
 
-generate_one_card <- function(x, infolder, file_list, positions){
+generate_one_card <- function(x, image_list, positions){
 
-  x <- lapply(x, image_load_transform, infolder=infolder, file_list=file_list)
+  x <- image_list[x]
+  # turn the image randomly around
+  for (i in seq_along(x)){
+    x[[i]] <- image_rotate(x[[i]], degrees = sample(c(0,90,180,270),1))
+  }
 
   #randomize the order of the pictures
   x <- sample(x)
 
+  #generate random sizes for the pictures
   sizevectors <- lapply(x, picture_size_generate)
 
   circles <- data.frame(x0 = 5.5, y0 = 5.5, r = 5.5)
