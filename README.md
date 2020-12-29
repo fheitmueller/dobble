@@ -1,4 +1,4 @@
-# README
+# dobbleR
 
 Package is not fully tested yet and performance can still be improved! Only use for testing purposes.
 
@@ -9,6 +9,6 @@ Another function enables to arrange the cards on DINA4 sheets for easy printing.
 
 The algorithm used to generate the cards was taken from a [Math Stackexchange conversation](https://math.stackexchange.com/questions/1303497/what-is-the-algorithm-to-generate-the-cards-in-the-game-dobble-known-as-spo) on the topic. 
 
-The cards are generated using the [Magick](https://github.com/ropensci/magick) and [Circlize](https://jokergoo.github.io/circlize_book/book/) packages.
+The cards are generated using the [Magick](https://github.com/ropensci/magick) and ggplot2 packages.
 
 
