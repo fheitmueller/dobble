@@ -6,38 +6,28 @@
 #'@import magick
 #'@export
 
-cards_to_A4 <- function(cardfolder, outfolder){
+cards_to_A4 <- function(card_list){
 
-  finalcard_list <- list.files(cardfolder)
+  if (length(card_list) < 57){
+    stop("Number of dobble cards is smaller than 57. Make sure that 57 cards are supplied")
+  }
 
-  for (j in 0:8){
-    i <- j*6
-    for (k in 1:6){
-      pic <- image_read(paste0(cardfolder, "/", finalcard_list[i+k]))
-      pic <- image_trim(pic)
-      assign(paste('pic',k,sep=''),pic)
-    }
-    out1 <- image_append(c(pic1,pic2))
-    out2 <- image_append(c(pic3,pic4))
-    out3 <- image_append(c(pic5,pic6))
-    sheet <- image_append(c(out1,out2,out3), stack=TRUE)
-    name <- paste0(outfolder,"sheet",j,".pdf")
-    image_write(sheet, path=name, format="pdf")
+
+card_list <- lapply(card_list, image_trim)
+
+vec_of_6 <- list(c(1:6), c(7:12), c(13:18), c(19:24), c(25:30), c(31:36), c(37:42), c(42:48), c(49:54), c(55:57, 55:57))
+
+append_fun <- function(x, y){
+  sheet <- image_append(c(image_append(c(y[[x[1]]],y[[x[2]]])),
+                          image_append(c(y[[x[3]]],y[[x[4]]])),
+                          image_append(c(y[[x[5]]],y[[x[6]]]))), stack=TRUE)
+return(sheet)
   }
-  ##the last three cards
-  for (k in 1:3){
-    pic <- image_read(paste0(cardfolder, "/", finalcard_list[54+k]))
-    pic <- image_trim(pic)
-    assign(paste('pic',k,sep=''),pic)
-  }
-  out1 <- image_append(c(pic1,pic2))
-  out2 <- image_append(c(pic3,pic1))
-  out3 <- image_append(c(pic2,pic3))
-  sheet <- image_append(c(out1,out2,out3), stack=TRUE)
-  image_write(sheet, path=paste0(outfolder, "sheet9.pdf"), format="pdf")
+
+sheet_list <- lapply(vec_of_6, append_fun, card_list)
+
+return(sheet_list)
 
 }
 
-###join pdfs
 
-#pdf_combine(c("sheet0.pdf", "sheet1.pdf", "sheet2.pdf", "sheet3.pdf", "sheet4.pdf", "sheet5.pdf", "sheet6.pdf", "sheet7.pdf","sheet8.pdf","sheet9.pdf"), output = "joined.pdf")
