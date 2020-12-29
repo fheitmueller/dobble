@@ -9,7 +9,7 @@
 picture_size_generate <- function(x){
   format = image_info(x)
   ratio = format$width / format$height
-  size1=runif(1.4,1.8,2.8)
+  size1=runif(1,1.8,2.8)
   if (format$width > format$height){
     widthsize=size1
     size2= size1 / ratio
