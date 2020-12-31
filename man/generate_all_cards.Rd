@@ -4,12 +4,7 @@
 \alias{generate_all_cards}
 \title{Generate all cards}
 \usage{
-generate_all_cards(infolder, saving = FALSE, outfolder)
-}
-\arguments{
-\item{outfolder}{is the path of a folder in which the 57 created cards are saved}
-
-\item{x}{is a list of dobble card templates}
+generate_all_cards(image_list)
 }
 \value{
 a set of dobble cards saved in the outfolder

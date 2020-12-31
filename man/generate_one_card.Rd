@@ -4,12 +4,12 @@
 \alias{generate_one_card}
 \title{Generate one card with ggplot}
 \usage{
-generate_one_card(x, infolder, file_list, positions)
+generate_one_card(x, image_list, positions)
 }
 \arguments{
 \item{x}{a vector of card numbers}
 
-\item{infolder}{the folder to read the files from}
+\item{image_list}{a list of 57 images}
 
 \item{positions}{a dataframe of positions for the images on the graph}
 }

@@ -2,6 +2,7 @@
 
 export(cards_to_A4)
 export(dobble_template)
+export(folder_to_cards)
 export(generate_all_cards)
 export(generate_one_card)
 import(ggforce)

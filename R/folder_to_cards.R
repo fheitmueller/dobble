@@ -1,8 +1,8 @@
 #' Folder to cards
 #'
-#' @param infolder
-#' @param outfolder
-#' @param output specifies whether each individual card should be saved or whether DINA4 sheets with six cards on each should be saved
+#' @param infolder a path to a folder containing 57 images
+#' @param outfolder a path to a folder in which the dobble cards are saved
+#' @param output specifies whether each individual card should be saved or whether DINA4 sheets with six cards on each should be saved. Accepted values are "SINGLE" (individual dobble cards are saved) and "DINA4" (a set of DINA4 with 6 dobble cards on each sheet will be saved). Defaults to SINGLE.
 #' @return a set of dobble cards saved in the outfolder
 #' @import magick
 #' @export
@@ -10,6 +10,9 @@
 
 folder_to_cards <- function(infolder, outfolder, output="SINGLE"){
 
+  if (!output %in% c("SINGLE", "DINA4")){
+    stop("Output argument must be specified. Accepted values are either 'SINGLE', or 'DINA4'")
+  }
 
 file_list <- list.files(path=infolder)
 

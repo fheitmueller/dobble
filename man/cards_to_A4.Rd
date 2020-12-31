@@ -4,7 +4,7 @@
 \alias{cards_to_A4}
 \title{Assembling cards on DINA4 sheets}
 \usage{
-cards_to_A4(cardfolder, outfolder)
+cards_to_A4(card_list)
 }
 \arguments{
 \item{cardfolder}{is a folder containing the 57 individual cards}
