@@ -2,11 +2,12 @@
 #'
 #' This function generates all dobble cards with the help of the generate one card function
 #' @param image_list
+#' @param shape defines the shape of the card: can be "circle"  (default), "blank" or "rectangle"
 #' @return a set of dobble cards saved in the outfolder
 #' @export
 
 
-generate_all_cards <- function(image_list){
+generate_all_cards <- function(image_list, shape = "circle"){
 
   # warnings and errors
 
@@ -34,7 +35,7 @@ image_list <- lapply(image_list, image_clean)
 cardlist <- dobble_template()
 
 
-all_cards <- lapply(cardlist, generate_one_card,image_list=image_list, positions=positions)
+all_cards <- lapply(cardlist, generate_one_card,image_list=image_list, positions=positions, shape=shape)
 
 
 return(all_cards)
